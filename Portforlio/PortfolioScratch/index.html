@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      font: 400 15px/1.8 "Lato", sans-serif;
+      color: #b3b3b3;
+    }
+
+    /* General card styles */
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      max-width: 300px;
+      /* Max width for larger screens */
+      height: 300px;
+      perspective: 1000px;
+      margin: 10px;
+      /* Add margin to ensure spacing around cards */
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .flip-card-front {
+      background-color: #bbb;
+      color: black;
+    }
+
+    .flip-card-front img {
+      width: 100%;
+      height: auto;
+    }
+
+    .flip-card-back {
+      background-color: #28485c;
+      color: white;
+      transform: rotateY(180deg);
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Container for projects */
+    .project-row-1 {
+      display: flex;
+      flex-wrap: wrap;
+      /* Allow wrapping for smaller screens */
+      justify-content: center;
+      /* Center cards horizontally */
+      padding: 10px;
+    }
+
+    .project-row-2 {
+      display: flex;
+      flex-wrap: wrap;
+      /* Allow wrapping for smaller screens */
+      justify-content: center;
+      /* Center cards horizontally */
+      padding: 10px;
+    }
+
+    .project-row-3 {
+      display: flex;
+      flex-wrap: wrap;
+      /* Allow wrapping for smaller screens */
+      justify-content: center;
+      /* Center cards horizontally */
+      padding: 10px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 400px;
+      /* Adjust to ensure three cards per row with gaps */
+      flex: 1 1 calc(33.333% - 16px);
+      box-sizing: border-box;
+      /* border: 1px solid #ccc;  */
+      /* Optional: padding inside cards */
+      padding: 16px;
+    }
+
+    /* Project cards */
+    .project1,
+    .project2,
+    .project3,
+    .project4 {
+      flex: 1 1 300px;
+      /* Flex-grow, flex-shrink, and base width */
+      max-width: 300px;
+      /* Ensure cards do not exceed this width */
+      margin: 10px 35px;
+      /* Space around each card */
+      text-align: center;
+    }
+
+    .project-section-height {
+      color: #ddd;
+      background-color: #282E34;
+      height: 900px;
+      text-align: center;
+      padding: 50px 80px;
+      text-align: justify;
+    }
+
+    .card-img {
+      width: 400px;
+      height: 500px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 90%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+
+    /* Modal Content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      height: 80%;
+      overflow-y: auto;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .click-here {
+      font-weight: 400;
+      border: 2px solid #4e0dc7;
+      background-color: rgb(202, 196, 235);
+      border-radius: 20px;
+      padding: 20px 20px;
+      font-weight: 600;
+    }
+
+    @media (min-width: 992px) {
+      .project-section-height {
+        height: 1800px;
+      }
+    }
+
+    /* Responsive design adjustments */
+    @media (max-width: 768px) {
+      .flip-card {
+        height: 200px;
+        /* Reduce height on smaller screens */
+      }
+
+      .project-row-1 {
+        flex-direction: column;
+        /* Stack cards vertically */
+        align-items: center;
+        /* Center cards horizontally */
+      }
+
+      .project-row-2 {
+        flex-direction: column;
+        /* Stack cards vertically */
+        align-items: center;
+        /* Center cards horizontally */
+      }
+
+      .project-row-3 {
+        flex-direction: column;
+        /* Stack cards vertically */
+        align-items: center;
+        /* Center cards horizontally */
+      }
+
+      .flip-card-inner {
+        transition: transform 0.5s;
+        /* Adjust transition for smaller screens */
+      }
+
+      .project-section-height {
+        height: 2010px;
+      }
+
+      .card-img {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .flip-card {
+        height: 150px;
+        /* Further reduce height on very small screens */
+      }
+
+      .flip-card-front img {
+        height: 100%;
+        /* Ensure images scale down with the card */
+        width: auto;
+        /* Maintain aspect ratio */
+      }
+
+      .project-section-height {
+        height: 2000px;
+      }
+
+      .card-img {
+        height: 180px;
+      }
+
+      .video-container-card3 {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .video-container-card3 video {
+        max-width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+
+    .text-colour-brown {
+      color: #3b3b3b;
+    }
+
+    .heading-pop-up {
+      color: #3b3b3b;
+      text-align: center;
+    }
+
+    .bgimg-1,
+    .bgimg-2,
+    .bgimg-3 {
+      position: relative;
+      opacity: 0.65;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .bgimg-1 {
+      background-image: url("img_parallax.jpg");
+      min-height: 100%;
+    }
+
+    .bgimg-2 {
+      background-image: url("img_parallax2.jpg");
+      min-height: 400px;
+    }
+
+    .bgimg-3 {
+      background-image: url("img_parallax3.jpg");
+      min-height: 400px;
+    }
+
+    .timeline {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 3px;
+      height: 100%;
+      background-color: #eaeaea;
+      margin-top: 180px;
+    }
+
+    .video-container-card3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .video-container-card3 video {
+      flex: 1;
+      margin: 0 10px;
+      max-width: 48%;
+    }
+
+    .caption {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      font-size: 25px;
+      text-align: center;
+      color: #000;
+    }
+
+    .caption span.border {
+      background-color: #000000;
+      color: #fff;
+      padding: 18px;
+      font-size: 35px;
+      letter-spacing: 10px;
+    }
+
+    h3 {
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font: 20px "Lato", sans-serif;
+      color: #111;
+    }
+
+    .buttons-link {
+      margin-top: 30px;
+    }
+
+    .buttons-link .svg {
+      padding: 50px;
+    }
+
+    .projects-section {
+      /* font-family: 'Comic Sans MS', 'Comic Sans', cursive; */
+      font: 200 15px/1.8 "Lato", sans-serif;
+    }
+
+    /* Turn off parallax scrolling for tablets and phones */
+    @media only screen and (max-device-width: 1024px) {
+
+      .bgimg-1,
+      .bgimg-2,
+      .bgimg-3 {
+        background-attachment: scroll;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="modal-body"> <!-- Content will be added dynamically --> </div>
+    </div>
+  </div>
+
+  <div class="bgimg-1">
+    <div class="caption">
+      <span class="border">Benfica Fernando</span>
+      <div class="buttons-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-linkedin"
+          viewBox="0 0 16 16">
+          <path
+            d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-kanban"
+          viewBox="0 0 16 16">
+          <path
+            d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+          <path
+            d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+          viewBox="0 0 16 16">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
+    <h3 style="text-align:center;">My Resume</h3>
+    <p>Parallax scrolling is a web site trend where the background content is moved at a different speed than the
+      foreground content while scrolling. Nascetur per nec posuere turpis, lectus nec libero turpis nunc at, sed posuere
+      mollis ullamcorper libero ante lectus, blandit pellentesque a, magna turpis est sapien duis blandit dignissim.
+      Viverra interdum mi magna mi, morbi sociis. Condimentum dui ipsum consequat morbi, curabitur aliquam pede, nullam
+      vitae eu placerat eget et vehicula. Varius quisque non molestie dolor, nunc nisl dapibus vestibulum at, sodales
+      tincidunt mauris ullamcorper, dapibus pulvinar, in in neque risus odio. Accumsan fringilla vulputate at quibusdam
+      sociis eleifend, aenean maecenas vulputate, non id vehicula lorem mattis, ratione interdum sociis ornare. Suscipit
+      proin magna cras vel, non sit platea sit, maecenas ante augue etiam maecenas, porta porttitor placerat leo.</p>
+  </div>
+
+  <div class="bgimg-2">
+    <div class="caption">
+      <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">LESS HEIGHT</span>
+    </div>
+  </div>
+
+  <div style="position:relative;" class="projects-section">
+    <div class="project-section-height">
+      <div class="project-row-1">
+        <!-- Project 1 -->
+        <div class="project1 card" data-content="Minesweeper">
+          <h1>MineSweeper Game</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img class="card-img" src="card-1-img.png" alt="Avatar">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">Dive into the Classic Game of Minesweeper, developed in Java.</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 2 -->
+        <div class="project2 card" data-content="gamedev">
+          <h1>Escape Room Game</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="images/card-2-img.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">A thrilling Escape Room Platformer developed using the Unity Game Engine.</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 3 -->
+        <div class="project3 card" data-content="multimedia">
+          <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Visual Media Project</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="images/card-3-aux1.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">A Visual Media Project analyzing the Effects of Quantization and Subsampling
+                  on Visual Media</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Row 2 -->
+      <div class="project-row-2">
+        <!-- Project 4 -->
+        <div class="project4 card" data-content="background-subtraction">
+          <h1>Background Subtraction & Video Overlay</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img class="card-img" src="images/card-4-displayimg.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">A project on background replacement for green screen videos with image
+                  processing in JAVA.</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 5 -->
+        <div class="project2 card" data-content="framedifferencing">
+          <h1>Foreground Detection & Frame Differencing</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="images/Card-4-carddisplayImage.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">A foreground object detection project leveraging the concept of frame
+                  differencing.</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 6 -->
+        <div class="project3 card" data-content="angularapp">
+          <h1 style="overflow: hidden; text-overflow: ellipsis;">TradeSmart Angular App</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="images/Card-6-cardImg.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">A real-time trading simulator app designed using the Angular framework with a
+                  Node.js backend.</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="project-row-3">
+        <!-- Project 7 -->
+        <div class="project4 card" data-content="blockchainproject">
+          <h1><span style="white-space: nowrap;">Blockchain System</span><br><span style="white-space: nowrap;">& Network Protocols</span></h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img class="card-img" src="images/card-7-imgdsp.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:15px;">A Socket programming project demonstarting the use of communication protocols
+                  such as TCP (Transmission Control Protocol) and UDP (User Datagram Protocol).</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 8 -->
+        <div class="project2 card" data-content="androidapp">
+          <h1>Stock Market Adroid App</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="images/Card-4-carddisplayImage.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">A foreground object detection project leveraging the concept of frame
+                  differencing.</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 9 -->
+        <div class="project3 card" data-content="angularapp">
+          <h1 style="overflow: hidden; text-overflow: ellipsis;">Gene Expresson Analysis Shiny App</h1>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="images/Card-6-cardImg.png" alt="Avatar" style="width:300px;height:300px;">
+              </div>
+              <div class="flip-card-back">
+                <p style="font-size:20px;">A real-time trading simulator app designed using the Angular framework with a
+                  Node.js backend.</p>
+                <br>
+                <button class="click-here">Click Here To Know More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bgimg-3">
+    <div class="caption">
+      <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span>
+    </div>
+  </div>
+
+  <div style="position:relative;">
+    <div style="color:#ddd;background-color:#282E34;text-align:center;padding:50px 80px;text-align: justify;">
+      <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
+      <h2 style="text-align:center">My Resume</h2>
+      <div class="timeline"></div>
+    </div>
+  </div>
+
+  <div class="bgimg-1">
+    <div class="caption">
+      <span class="border">COOL!</span>
+    </div>
+  </div>
+
+</body>
+<script>
+  // Get modal and its content
+  var modal = document.getElementById("myModal");
+  var modalBody = document.getElementById("modal-body");
+  var span = document.getElementsByClassName("close")[0];
+
+  // Attach click event to all cards
+  document.querySelectorAll('.card').forEach(function (card) {
+    card.onclick = function () {
+      var content = this.getAttribute('data-content');
+      if (content === "Minesweeper") {
+        var content_string = `
+        <h1 class = "heading-pop-up">Minesweeper Game<h1>
+            <hr style="border: 1px solid #ddd; margin: 20px 0;">
+    
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+            <li>Java</li>
+            <li>Java Swing</li>
+            <li>Object-Oriented Programming</li>
+            <!-- Add any additional technologies or libraries you used -->
+        </ul>
+    
+        <h2 class="text-colour-brown">Game Preview</h2>
+        <div class="video-container" style="text-align: center; margin: 20px 0;">
+            <video width="640" height="360" controls>
+                <source src="Minesweper-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <br>
+            <img src="./images/modal-img-1.png" alt="Avatar" style="width:300px;height:300px;">
+        </div>
+    
+        <h2 class="text-colour-brown">Project Description</h2>
+        <p class="text-colour-brown">
+            The classic game of Minesweeper, developed using Java Swing to provide an engaging and interactive experience. This version of Minesweeper brings the nostalgic gameplay to a modern platform, featuring a 9x9 grid where players can flag mines and uncover safe tiles. With a focus on user experience, the game includes a dynamic UI that updates as players make moves, and visually represents the game state with clear indicators for mines and flags.
+        </p>
+        <p class="text-colour-brown">
+            <strong>Features:</strong>
+        </p>
+        <ul class="text-colour-brown" style="list-style-type: disc; margin-left: 20px;">
+            <li>Classic Minesweeper gameplay with customizable grid sizes.</li>
+            <li>Increase the difficulty by adjusting the number of mines in the grid.</li>
+            <li><strong>Utilizes the flood-fill algorithm</strong> to reveal empty spaces when clicked, efficiently uncovering large open areas of the board.</li>
+            <li>Flag tiles to mark potential mines with a right click, marked as YELLOW</li>
+            <li>Mark tiles as unknown with a triple click to add a question mark.</li>
+            <li>Displays the number of remaining guesses at the top of the screen.</li>
+            <li>Indicates lost game state by showing unopened mines in black and guessed wrong mines with an X symbol.</li>
+            <li>Winning state is indicated with a smiley face and a "You Win!" message.</li>
+            <li>Replay the game easily with a clickable sad-smiley face button.</li>
+        </ul>
+    
+        <h2 class="text-colour-brown">Download and Play</h2>
+        <p class="text-colour-brown">
+            Ready to test your skills? Download the JAR file below and start playing!
+        </p>
+        <p class="text-colour-brown">To run the JAR file, use the following command in your terminal: java -jar your-file-name.jar</p><br>
+        <a href="https://drive.google.com/file/d/1qrP0pNCdnGgorCbtq67iodYGBD20xtnY/view?usp=sharing" download>
+            <button style="padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007BFF; border: none; border-radius: 5px; cursor: pointer;">
+                Download Minesweeper JAR
+            </button>
+        </a>
+        </br>
+        </br>
+        <a href="https://github.com/blm3886/Minesweeper" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+          viewBox="0 0 16 16">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+        </svg><p class="text-colour-brown" >Github</p>
+        </a>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+      else if (content === "gamedev") {
+        var content_string = `<h1 class="heading-pop-up">Escape Room</h1>
+      <hr style="border: 1px solid #ddd; margin: 20px 0;">
+
+      <h2 class="text-colour-brown">Tech Stack</h2>
+      <ul class="text-colour-brown">
+          <li>C#</li>
+          <li>Unity Game Engine</li>
+          <li>AI Bot Mechanics</li>
+          <li>Game Animation</li>
+          <li>Statistical Analysis with Pandas and Plots generation with matplotlib and Seaborn</li>
+      </ul>
+
+      <h2 class="text-colour-brown">Game Preview</h2>
+      <div class="video-container" style="text-align: center; margin: 20px 0;">
+          <video width="640" height="360" controls>
+              <source src="images/card-2-aux1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <br>
+          <img src="./images/card-2-aux2.png" alt="Escape Room Game" style="width:300px;height:300px;">
+      </div>
+
+      <h2 class="text-colour-brown">Project Description</h2>
+      <p class="text-colour-brown">
+          Developed an engaging escape room platformer game where players overcome obstacles and find keys to progress. The game was created using C# in the Unity Game Engine, featuring detailed animations and AI bot mechanics. The project focused on enhancing user interaction by implementing tracking systems and building charts to study user behavior using Pandas for statistical analysis.
+      </p>
+      <p class="text-colour-brown">
+          <strong>Features:</strong>
+      </p>
+      <ul class="text-colour-brown" style="list-style-type: disc; margin-left: 20px;">
+          <li>Immersive escape room gameplay with various challenging obstacles.</li>
+          <li>AI bots that provide dynamic challenges and interactions.</li>
+          <li>Detailed animations and visual effects to enhance user experience.</li>
+          <li>Tracking player interactions and studying user behavior with statistical analysis tools.</li>
+          <li>Visually compelling drawings and artwork to bring the game world to life.</li>
+      </ul>
+
+      <h2 class="text-colour-brown">Download and Play</h2>
+      <p class="text-colour-brown">
+          Ready to test your skills in the escape room? start playing!
+      </p>
+      <a href="https://benfica1718.itch.io/roaringbears" download>
+          <button style="padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007BFF; border: none; border-radius: 5px; cursor: pointer;">
+              Play Game
+          </button>
+      </a>
+      </br>
+      </br>
+        <a href=https://github.com/blm3886/GameDev" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+          viewBox="0 0 16 16">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+        </svg><p class="text-colour-brown" >Github</p>
+        </a>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+      else if (content === "multimedia") {
+        var content_string = `
+      <div class="text-colour-brown">
+      <h1 class="heading-pop-up">Image Processing Project</h1>
+        <hr style="border: 1px solid #ddd; margin: 20px 0;">
+
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+            <li>JAVA</li>
+            <li>Pixel Manipulation</li>
+            <li>NumPy</li>
+            <li>RGB to YUV Conversion</li>
+            <li>YUV SubSampling</li>
+            <li>Pixel Quantization</li>
+            <li>Antialiasing</li>
+            <li>Motion detection using background subtraction</li>
+        </ul>
+
+        <h2 class="text-colour-brown">Project Overview :Image Processing with Chroma Subsampling and Quantization</h2>
+        <center>
+        <img src="images/Figure1.png" alt="Image Processing Project" style="width:700px;height:300px;">
+        <p> Figure 1</p>
+        <img src="images/Figure2.png" alt="Image Processing Project" style="width:700px;height:300px;">
+        <p> Figure 2</p>
+        <img src="images/Figure3.png" alt="Image Processing Project" style="width:700px;height:300px;">
+        <p> Figure 3</p>
+        </center>
+        <p class="text-colour-brown">
+            Developed an image processing application focusing on quantization and subsampling techniques to reduce image size for low bandwidth transfer while retaining quality. 
+        </p>
+      <p class="text-colour-brown">
+            <strong>Features:</strong>
+      </p>
+      <ul class="text-colour-brown" style="list-style-type: disc; margin-left: 20px;">
+            <li>Worked with .rgb image files, implementing chroma subsampling and quantization techniques to reduce image file size while maintaining quality.</li>
+            <li>Implementation of different subsampling techniques to evaluate their impact.</li>
+      </ul>
+      <p><strong>Project Details: Image Processing with Chroma Subsampling and Quantization</strong></p>
+      <ul>
+      <li><strong>Chroma Subsampling:</strong> I performed chroma subsampling using the YUV representation of an image. The following images illustrate the effects of different subsampling and quantization settings on the image quality and size:</li>
+
+      <li><strong>Figure 1: Original Image</strong>
+          <ul>
+          <li><strong>Command:</strong>java SubSampleQuan miamibeach.rgb 1 1 1 256</li>
+          <li><strong>Details:</strong> Y: 1, U: 1, V: 1; Each pixel in the image is quantized using 256 levels.</li>
+          <li><strong>Observation:</strong> The image retains its original size and quality as there is no subsampling applied to the Y, U, and V components.</li>
+      </ul>
+      </li>
+      <li><strong>Figure 2: Reduced Chroma Resolution</strong>
+      <ul>
+          <li><strong>Command:</strong>java SubSampleQuan miamibeach.rgb 1 8 8 256</li>
+          <li><strong>Details:</strong> Y: 1, U: 8, V: 8; Each pixel is quantized using 256 levels.</li>
+          <li><strong>Observation:</strong> The image shows reduced chroma values (U and V components), leading to a noticeable loss in color detail. Despite the reduction, the image quality is still relatively retained.</li>
+        </ul>
+      </li>
+      <li><strong>Figure 3: Significant Subsampling</strong>
+      <ul>
+        <li><strong>Command:</strong> java SubSampleQuan miamibeach.rgb 16 16 16 16</li>
+        <li><strong>Details:</strong> Y: 16 (No subsampling; full resolution for Y), U: 16 (Chroma subsampling factor of 16 horizontally; each U value is shared by a block of 16 pixels horizontally), V: 16 (Chroma subsampling factor of 16 horizontally; each V value is shared by a block of 16 pixels horizontally). Each pixel is quantized using 16 levels.</li>
+        <li><strong>Observation:</strong> This setting results in significant subsampling for U and V components and a drastic reduction in quantization levels. The image exhibits considerable color and detail loss, with noticeable artifacts and reduced overall quality.</li>
+      </ul>
+      </li>
+      <li><strong>Conclusion:</strong> The experiments demonstrate the impact of chroma subsampling and quantization on image quality and file size. Minimal subsampling and higher quantization levels maintain image quality, while more aggressive subsampling and lower quantization levels result in noticeable degradation. These techniques are valuable for balancing image quality and file size in practical applications.</li>
+      </ul>
+      <br>
+      <br>
+      <a href="https://github.com/blm3886/Image-Processing" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+            </svg>
+            <p class="text-colour-brown">Github</p>
+      </a>
+      <div>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+      else if (content === "background-subtraction") {
+        var content_string = `
+      <div class="text-colour-brown">
+      <h1 class="heading-pop-up"> Background Overlay for Green Screen Video</h1>
+        <hr style="border: 1px solid #ddd; margin: 20px 0;">
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+            <li><strong>Java AWT (Abstract Window Toolkit)</strong>: For creating graphical user interfaces and working with images.</li>
+            <li><strong>Java Swing</strong>: For building the graphical user interface (GUI) components like frames and labels.</li>
+            <li><strong>Java ImageIO</strong>: For reading and writing image files.</li>
+            <li><strong>Color Space Conversion</strong>: : Converting images from RGB to HSV color space for better color detection and processing.</li>
+        </ul>
+
+        <h2 class="text-colour-brown">Project Overview :Image Processing Using Concepts of Edge Detection and Foreground Extraction</h2>
+        <p class="text-colour-brown">
+            <strong>Features:</strong>
+        </p>
+        <ul class="text-colour-brown" style="list-style-type: disc; margin-left: 20px;">
+          <li><strong>Background Subtraction</strong>: Technique used to subtract the green screen background from frames in video.</li>
+          <li><strong>Foreground Extraction</strong>: Extracting the main subject from the video after background subtraction.</li>
+        </ul>
+        <center>
+        <div class="video-container" style="text-align: center; margin: 20px 0;">
+          <p>background Video # 1</p>
+          <video width="640" height="360" controls autoplay>
+              <source src="images/card-3-aux2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          </br>
+          <p>Foreground Video # 2</p>
+          <video width="640" height="360" controls autoplay>
+              <source src="images/card-3-aux3.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          </br>
+          <p> Result Video after processing# 3</p>
+          <video width="640" height="360" controls autoplay>
+              <source src="images/card-3-aux4.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+        </div>
+        </center>
+        <p class="text-colour-brown">
+          This project focuses on replacing the background in green screen videos by detecting edges and extracting the foreground object from each frame in the green screen video, 
+          then merging it with a new background. The process involves converting RGB values to HSV for better color segmentation, applying thresholding to identify background pixels, 
+          creating an alpha mask for transparency information, refining edges using alpha values, and finally overlaying the extracted foreground onto a new background.
+        </p>
+      <p><strong>Project Details: Image Processing with Background Green Screen Pixel Detection and Foreground Edge Detection for Smooth Edges</strong></p>
+      <ul>
+      <li><strong>Identification of green screen pixels:</strong> In this project, I worked with .rgb video files. For each frame, I converted the RGB values of each pixel to HSV (Hue, Saturation, Value) to simplify color-based segmentation. I identified the green pixels based on threshold HSV values, isolating them and replacing those pixels with the corresponding background pixels from the moving video.</li>
+      <li><strong>Foreground Extraction:</strong> To ensure the foreground has smooth edges with minimal green pixels from the background, I used the concept of alpha mask creation. I created an alpha mask where each pixel's alpha value is set based on the background subtraction result. Pixels identified as part of the background are given a lower alpha value (e.g., 0), while foreground pixels are given a higher alpha value (e.g., 255). Using the refined alpha mask, I extracted the foreground object from each frame. The foreground pixels are retained with their original RGB values, and the background pixels are set to transparent (alpha = 0).</li>
+      </ul>
+      <br>
+      <a href="https://github.com/blm3886/Image-Processing" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+            </svg>
+            <p class="text-colour-brown">Github</p>
+      </a>
+      <div>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+      else if (content === "framedifferencing") {
+        var content_string = `
+      <div class="text-colour-brown">
+      <h1 class="heading-pop-up"> Motion Detection using Frame Differencing</h1>
+        <hr style="border: 1px solid #ddd; margin: 20px 0;">
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+            <li><strong>Java AWT (Abstract Window Toolkit)</strong>: For creating graphical user interfaces and working with images.</li>
+            <li><strong>Java Swing</strong>: For building the graphical user interface (GUI) components like frames and labels.</li>
+            <li><strong>Java ImageIO</strong>: For reading and writing image files.</li>
+            <li><strong>Color Space Conversion</strong>: : Converting images from RGB to HSV color space for better color detection and processing.</li>
+        </ul>
+
+        <h2 class="text-colour-brown">Project Overview :Extraction of Moving Foreground Objects from Stationary Camera Video using Frame Differencing</h2>
+        <p class="text-colour-brown">
+            <strong>Features:</strong>
+        </p>
+        <ul class="text-colour-brown" style="list-style-type: disc; margin-left: 20px;">
+          <li><strong>Java-based Pixel Manipulation:</strong> Handled pixel-level data in 8-bit per channel RGB format (24 bits per pixel) without using image processing libraries.</li>
+          <li><strong>Foreground Extraction</strong>:Identifying and isolating moving objects from the stationary background using frame differencing.</li>
+          <li><strong>Composite Creation</strong>:Overlaying the extracted foreground onto a static background to create a composite image.</li>
+        </ul>
+        <center>
+        <div class="video-container" style="text-align: center; margin: 20px 0;">
+          <p>background Video # 1 (Original Video)</p>
+          <video width="640" height="360" controls autoplay>
+              <source src="images/Card-4-video2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          </br>
+          <p>Foreground Video # 2 (Static Backgoung video For Overlay)</p>
+          <img src="images/Card-4-img2.png.png" alt="Image Processing Project" style="width:700px;height:300px;">
+          </br>
+          <p> Result Video after processing# 3</p>
+          <video width="640" height="360" controls autoplay>
+              <source src="images/Card-4-video1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+        </div>
+        </center>
+        <p class="text-colour-brown">
+          The project aims to extract the foreground from a video with a stationary camera by performing frame differencing on consecutive frames and overlaying the extracted foreground onto a static background to create a composite result.The key concept here is that the camera is stationary, providing a stationary background. This allows us to detect moving objects in the foreground using background subtraction.
+          I have processed the sequential frames from the video and detected the pixels that moved with respect to the stationary background, classifying them as foreground.The results are not entirely accurate because the video I used contains many shadows and moving elements in the background, even though the camera is stationary.
+        </p>
+      <p><strong>Project Details: Image Processing with Background Green Screen Pixel Detection and Foreground Edge Detection for Smooth Edges</strong></p>
+      <ul>
+      <li><strong>Foreground Extraction:</strong> In this project, I worked with .rgb frames in a video file. For each frame, I converted RGB values to HSV for accurate color-based extraction. The program compares consecutive frames to detect and extract the foreground by identifying pixels that have changed. This Java-based program handles pixel-level data without using any image processing libraries.</li>
+      <li><strong>Background Overlay:</strong> After detecting the foreground in each frame using frame differencing, I replaced the background pixels with a flag value. I then used a static background file to overlay the flagged background pixels and create a composite video.</li>
+      </ul>
+      <br>
+      <a href="https://github.com/blm3886/Motion-Detection-FrameDifferencing" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+            </svg>
+            <p class="text-colour-brown">Github</p>
+      </a>
+      <div>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+      else if (content === "blockchainproject") {
+        var content_string = `
+      <div class="text-colour-brown">
+      <h1 class="heading-pop-up">Simplified Blockchain Project to Demonstrate Communication Protocols and Transaction Management</h1>
+        <hr style="border: 1px solid #ddd; margin: 20px 0;">
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+            <li><strong>Programming Languages:</strong> C++</li>
+            <li><strong>Communication Protocols:</strong> TCP (Transmission Control Protocol), UDP (User Datagram Protocol)</li>
+            <li><strong>Development Environment:</strong> Unix-based system</li>
+            <li><strong>Networking:</strong>UNIX Socket Programming</li>
+        </ul>
+        <h2 class="text-colour-brown">Project Overview :BlockChain Communication System</h2>
+<p>As part of my coursework, I have implemented a simplified version of a blockchain system to simulate the functioning of cryptocurrency transactions.</p>
+<p>I developed a system consisting of three nodes on the blockchain, each representing a backend server that stores transactions.</p>
+<p>I then designed a main server that performs all calculations and updates the digital wallets of each user.</p>
+<p>Transactions in the blockchain include the transaction number, sender, receiver, and the amount being transferred.</p>
+<p>Communication between the client and the servers occurs via the TCP and UDP protocols, ensuring secure data transfer.</p>        
+        <center>
+        <div class="video-container" style="text-align: center; margin: 20px 0;">
+          <img src="images/card-7-img1.png" alt="Image Processing Project" style="width:700px;height:300px;">
+          <p>This image shows the architecture of the system implemented in this project. It features a Central Server (Server M) that interacts with three backend servers (Server A, Server B, and Server C) to pull information and process data as per the user's request. Communication between the clients and the Central Server occurs over TCP, while the Central Server communicates with the backend servers using UDP.</p>
+        </div>
+        </center>
+        <p><strong>Project Details</strong></p>
+        <p>In this project I have used <ul>
+        <li><strong>TCP protocol for client server communication :</strong>Client-server interactions often involve critical data exchanges, such as transaction requests, balance checks, and transaction confirmations.TCP ensures that these communications are reliable. It guarantees that all data packets arrive at the destination in the correct order</li></p>
+        <li><strong>UDP protocol for server-server communication:</strong> UDP is faster than TCP because it has lower overhead. It does not establish a connection, perform handshakes, or provide acknowledgment packets. Thus, I have used UDP for server-server communication where rapid data exchange is more important than reliability.</li>
+        </ul>
+        <p>Server A, Server B, and Server C represent three servers that have access to three different blocks, forming the core blockchain architecture.</p>
+        <p>When a client makes a transaction, the Central Server randomly records the transaction in any one of the blocks in our blockchain.</p>
+        <p>The user can request the details of a transaction, and in response, the Central Server computes the transactions from all three blocks by communicating with Server A, Server B, and Server C, and returns the result to the client.</p>
+      
+      <br>
+      <center>
+      <a href="https://github.com/blm3886/Socket-Programming" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+            </svg>
+            <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
+      </a>
+      <div>
+      <center>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+    }
+  });
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+</html>
