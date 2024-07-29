@@ -3,6 +3,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <style>
     body,
     html {
@@ -10,6 +12,31 @@
       margin: 0;
       font: 400 15px/1.8 "Lato", sans-serif;
       color: #b3b3b3;
+    }
+
+    .inline-ele{
+      display: inline;
+    }
+
+    .rounded-border{
+      border-radius:20x;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column; 
+      height: 100%;
+    }
+
+    .card-body .click-here {
+      margin-top: auto;
+    }
+
+    .card-img-top {
+      display: block; 
+      width: 100%; 
+      height: 100%;
+      object-fit: cover;
     }
 
     /* General card styles */
@@ -48,14 +75,18 @@
     }
 
     .flip-card-front {
-      background-color: #bbb;
+      background-color: #393939;
       color: black;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 20px;
     }
 
-    .flip-card-front img {
+    /* .flip-card-front img {
       width: 100%;
       height: auto;
-    }
+    } */
 
     .flip-card-back {
       background-color: #28485c;
@@ -63,67 +94,50 @@
       transform: rotateY(180deg);
       align-items: center;
       text-align: center;
+      border-radius: 20px;
+    }
+
+    .card h3{
+      color:white;
+      font-weight: 400;
     }
 
     /* Container for projects */
     .project-row-1 {
       display: flex;
       flex-wrap: wrap;
-      /* Allow wrapping for smaller screens */
       justify-content: center;
-      /* Center cards horizontally */
       padding: 10px;
     }
 
     .project-row-2 {
       display: flex;
       flex-wrap: wrap;
-      /* Allow wrapping for smaller screens */
       justify-content: center;
-      /* Center cards horizontally */
       padding: 10px;
     }
 
     .project-row-3 {
       display: flex;
       flex-wrap: wrap;
-      /* Allow wrapping for smaller screens */
       justify-content: center;
-      /* Center cards horizontally */
       padding: 10px;
     }
 
     .card {
-      display: flex;
-      flex-direction: column;
+      /* display: flex;
+      flex-direction: column; */
       justify-content: space-between;
       min-height: 400px;
-      /* Adjust to ensure three cards per row with gaps */
       flex: 1 1 calc(33.333% - 16px);
       box-sizing: border-box;
-      /* border: 1px solid #ccc;  */
-      /* Optional: padding inside cards */
-      padding: 16px;
-    }
-
-    /* Project cards */
-    .project1,
-    .project2,
-    .project3,
-    .project4 {
-      flex: 1 1 300px;
-      /* Flex-grow, flex-shrink, and base width */
-      max-width: 300px;
-      /* Ensure cards do not exceed this width */
-      margin: 10px 35px;
-      /* Space around each card */
-      text-align: center;
+      padding: 16px 10px;
     }
 
     .project-section-height {
       color: #ddd;
       background-color: #282E34;
-      height: 900px;
+      height: 1500px;
       text-align: center;
       padding: 50px 80px;
       text-align: justify;
@@ -134,6 +148,15 @@
       height: 500px;
     }
 
+    .modal-header {
+      display: flex;
+      justify-content: space-between; /* Aligns heading and close button to the sides */
+      align-items: center; /* Vertically center the content */
+      padding: 1rem; /* Add some padding */
+      background-color: #f8f9fa; /* Background color of the header */
+      border-bottom: 1px solid #dee2e6; /* Border below the header */
+    }
+
     /* The Modal (background) */
     .modal {
       display: none;
@@ -142,13 +165,13 @@
       /* Stay in place */
       z-index: 1;
       /* Sit on top */
-      padding-top: 100px;
+      padding-top: 10px;
       /* Location of the box */
       left: 0;
       top: 0;
       width: 100%;
       /* Full width */
-      height: 90%;
+      height: 100%;
       /* Full height */
       overflow: auto;
       /* Enable scroll if needed */
@@ -158,6 +181,10 @@
       /* Black w/ opacity */
     }
 
+    .modal button{
+      z-index: 1;
+    }
+
 
     /* Modal Content */
     .modal-content {
@@ -165,17 +192,21 @@
       margin: auto;
       padding: 20px;
       border: 1px solid #888;
-      width: 80%;
-      height: 80%;
+      width: 90%;
+      height: 100%;
       overflow-y: auto;
     }
 
     /* The Close Button */
     .close {
-      color: #aaaaaa;
+      color: rgb(80, 77, 77);
       float: right;
       font-size: 28px;
       font-weight: bold;
+      cursor: pointer; 
+      position: fixed;
+      top: 10px; 
+      right: 7rem;
     }
 
     .close:hover,
@@ -187,16 +218,23 @@
 
     .click-here {
       font-weight: 400;
-      border: 2px solid #4e0dc7;
-      background-color: rgb(202, 196, 235);
+      border: 2px solid rgb(45, 109, 200);;
+      background-color: rgb(45, 109, 200);
       border-radius: 20px;
       padding: 20px 20px;
       font-weight: 600;
+      cursor: pointer;
+    }
+
+    .linkedin-icon {
+    fill: #000000; 
+    pointer-events: all; 
+    background-color: white;
     }
 
     @media (min-width: 992px) {
       .project-section-height {
-        height: 1800px;
+        height: 1700px;
       }
     }
 
@@ -234,7 +272,7 @@
       }
 
       .project-section-height {
-        height: 2010px;
+        height: 4010px;
       }
 
       .card-img {
@@ -256,7 +294,7 @@
       }
 
       .project-section-height {
-        height: 2000px;
+        height: 5500px;
       }
 
       .card-img {
@@ -292,6 +330,7 @@
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
+      /* z-index: -1; */
     }
 
     .bgimg-1 {
@@ -338,9 +377,11 @@
       left: 0;
       top: 50%;
       width: 100%;
-      font-size: 25px;
+      font-size: 35px;
+      font-weight: 1000;
       text-align: center;
       color: #000;
+      z-index: 3; 
     }
 
     .caption span.border {
@@ -359,7 +400,7 @@
     }
 
     .buttons-link {
-      margin-top: 30px;
+    margin-top: 30px;
     }
 
     .buttons-link .svg {
@@ -368,10 +409,9 @@
 
     .projects-section {
       /* font-family: 'Comic Sans MS', 'Comic Sans', cursive; */
-      font: 200 15px/1.8 "Lato", sans-serif;
+      /* font: 200 15px/1.8 "Lato", sans-serif; */
+      font: 200 15px/1.8;
     }
-
-    /* Turn off parallax scrolling for tablets and phones */
     @media only screen and (max-device-width: 1024px) {
 
       .bgimg-1,
@@ -379,6 +419,7 @@
       .bgimg-3 {
         background-attachment: scroll;
       }
+
     }
   </style>
 </head>
@@ -388,7 +429,7 @@
   <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
-      <span class="close">&times;</span>
+      <div class="close">&times;</div>
       <div id="modal-body"> <!-- Content will be added dynamically --> </div>
     </div>
   </div>
@@ -397,149 +438,169 @@
     <div class="caption">
       <span class="border">Benfica Fernando</span>
       <div class="buttons-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-linkedin"
-          viewBox="0 0 16 16">
-          <path
-            d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-kanban"
+        <a href="https://www.linkedin.com/in/benfica-xavier-fernando-330a78168/" target="_blank" rel="noopener noreferrer" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" class="linkedin-icon" viewBox="0 0 16 16">
+              <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+          </svg>
+        </a>
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-kanban"
           viewBox="0 0 16 16">
           <path
             d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
           <path
             d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z" />
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+        </svg> -->
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
           viewBox="0 0 16 16">
           <path
             d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
-        </svg>
+        </svg> -->
       </div>
     </div>
   </div>
 
   <div style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
-    <h3 style="text-align:center;">My Resume</h3>
-    <p>Parallax scrolling is a web site trend where the background content is moved at a different speed than the
-      foreground content while scrolling. Nascetur per nec posuere turpis, lectus nec libero turpis nunc at, sed posuere
-      mollis ullamcorper libero ante lectus, blandit pellentesque a, magna turpis est sapien duis blandit dignissim.
-      Viverra interdum mi magna mi, morbi sociis. Condimentum dui ipsum consequat morbi, curabitur aliquam pede, nullam
-      vitae eu placerat eget et vehicula. Varius quisque non molestie dolor, nunc nisl dapibus vestibulum at, sodales
-      tincidunt mauris ullamcorper, dapibus pulvinar, in in neque risus odio. Accumsan fringilla vulputate at quibusdam
-      sociis eleifend, aenean maecenas vulputate, non id vehicula lorem mattis, ratione interdum sociis ornare. Suscipit
-      proin magna cras vel, non sit platea sit, maecenas ante augue etiam maecenas, porta porttitor placerat leo.</p>
-  </div>
-
+    <h3 style="text-align:center;">About Me</h3>
+    <p><strong>Welcome to my digital space!
+      <img class="inline-ele" src="images/smiley1.svg" alt="hi_image" width="10" height="10">
+    </strong></p>
+    <p>
+      I am a <strong>Computer Science graduate</strong> and a passionate <strong> Software Engineer @ Easley-Dunn Productions, Inc </strong>
+      with expertise in Full Stack Web Development.
+    </p>
+    <p>
+      Over the years, I have honed my skills in building scalable applications and crafting innovative solutions. My experience includes building data analytics app and build efficient data processing pipelines.
+    </p>
+    <p>
+      My journey began with a solid foundation in Bioinformatics and Computer Science, which laid the groundwork for my career in software development. Since then, I have been fortunate to work with talented teams and innovative companies, contributing to significant projects that have improved user experiences and optimized backend systems.
+    </p>
+    <p>
+      Outside of my professional life, I am fascinated by the latest advancements in AI. I am particularly interested in the use of AI in automotive technology and the medical field. Innovations like AI-driven autonomous cars and the recent developments in AI-powered exoskeletons inspire me to stay creative and motivated. I believe in continuous learning and am always excited to explore new challenges and opportunities.
+    </p>
+    <p>
+     <strong> Thank you for visiting my page. Feel free to explore my work and reach out on <a href="https://www.linkedin.com/in/benfica-xavier-fernando-330a78168/" target="_blank" rel="noopener noreferrer"> LinkedIn</a> if you'd like to connect!</strong>
+    </p>    
   <div class="bgimg-2">
     <div class="caption">
-      <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">LESS HEIGHT</span>
+      <span class="border" style="background-color:black;font-size:25px;color: #fcfbfb;">MY PROJECTS</span>
     </div>
   </div>
 
   <div style="position:relative;" class="projects-section">
     <div class="project-section-height">
-      <div class="project-row-1">
-        <!-- Project 1 -->
-        <div class="project1 card" data-content="Minesweeper">
-          <h1>MineSweeper Game</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img class="card-img" src="card-1-img.png" alt="Avatar">
-              </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">Dive into the Classic Game of Minesweeper, developed in Java.</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Project 2 -->
-        <div class="project2 card" data-content="gamedev">
-          <h1>Escape Room Game</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img src="images/card-2-img.png" alt="Avatar" style="width:300px;height:300px;">
-              </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">A thrilling Escape Room Platformer developed using the Unity Game Engine.</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
+      <div class="container">
+        <div class="projects-section">
+          <div class="row">
+            <!-- Project 1 -->
+            <div class="col-md-4 mb-4">
+              <div class="card flip-card" data-content="Minesweeper">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <h3 class="card-title">MineSweeper Game</h3>
+                    <img src="card-1-img.png" class="card-img-top" alt="MineSweeper Game">
+                  </div>
+                  <div class="flip-card-back">
+                    <div class="card-body">
+                      <p class="card-text">Dive into the Classic Game of Minesweeper, developed in Java.</p>
+                      <button class="btn btn-primary click-here">Click Here To Know More</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <!-- Project 3 -->
-        <div class="project3 card" data-content="multimedia">
-          <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Visual Media Project</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img src="images/card-3-aux1.png" alt="Avatar" style="width:300px;height:300px;">
+    
+            <!-- Project 2 -->
+            <div class="col-md-4 mb-4">
+              <div class="card flip-card" data-content="gamedev">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <h3 class="card-title">Escape Room Game</h3>
+                    <img src="images/card-2-img.png" class="card-img-top" alt="Escape Room Game">
+                  </div>
+                  <div class="flip-card-back">
+                    <div class="card-body">
+                      <p class="card-text">A thrilling Escape Room Platformer developed using the Unity Game Engine.</p>
+                      <button class="btn btn-primary click-here">Click Here To Know More</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">A Visual Media Project analyzing the Effects of Quantization and Subsampling
-                  on Visual Media</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
+            </div>
+    
+            <!-- Project 3 -->
+            <div class="col-md-4 mb-4">
+              <div class="card flip-card" data-content="multimedia">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <h3 class="card-title">Visual Media Project</h3>
+                    <img src="images/card-3-aux1.png" class="card-img-top" alt="Visual Media Project">
+                  </div>
+                  <div class="flip-card-back">
+                    <div class="card-body">
+                      <p class="card-text">A Visual Media Project analyzing the Effects of Quantization and Subsampling on Visual Media.</p>
+                      <a class="btn btn-primary click-here" >Click Here To Know More</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-
       <!-- Row 2 -->
-      <div class="project-row-2">
-        <!-- Project 4 -->
-        <div class="project4 card" data-content="background-subtraction">
-          <h1>Background Subtraction & Video Overlay</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img class="card-img" src="images/card-4-displayimg.png" alt="Avatar" style="width:300px;height:300px;">
-              </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">A project on background replacement for green screen videos with image
-                  processing in JAVA.</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Project 5 -->
-        <div class="project2 card" data-content="framedifferencing">
-          <h1>Foreground Detection & Frame Differencing</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img src="images/Card-4-carddisplayImage.png" alt="Avatar" style="width:300px;height:300px;">
-              </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">A foreground object detection project leveraging the concept of frame
-                  differencing.</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
+      <div class="container">
+        <div class="row">
+          <!-- Project 4 -->
+          <div class="col-md-4 mb-4">
+            <div class="card flip-card" data-content="background-subtraction">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <h3 class="card-title">Background Subtraction & Video Overlay</h3>
+                  <img src="images/card-4-displayimg.png" alt="Background Subtraction" class="card-img">
+                </div>
+                <div class="flip-card-back">
+                  <div class="card-body">
+                    <p class="card-text">A project on background replacement for green screen videos with image processing in Java.</p>
+                    <button class="btn btn-primary click-here">Click Here To Know More</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Project 6 -->
-        <div class="project3 card" data-content="angularapp">
-          <h1 style="overflow: hidden; text-overflow: ellipsis;">TradeSmart Angular App</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img src="images/Card-6-cardImg.png" alt="Avatar" style="width:300px;height:300px;">
+    
+          <!-- Project 5 -->
+          <div class="col-md-4 mb-4">
+            <div class="card flip-card" data-content="framedifferencing">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <h3 class="card-title">Foreground Detection & Frame Differencing</h3>
+                  <img src="images/Card-4-carddisplayImage.png" alt="Foreground Detection" class="card-img">
+                </div>
+                <div class="flip-card-back">
+                  <div class="card-body">
+                    <p class="card-text">A foreground object detection project leveraging the concept of frame differencing.</p>
+                    <button class="btn btn-primary click-here">Click Here To Know More</button>
+                  </div>
+                </div>
               </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">A real-time trading simulator app designed using the Angular framework with a
-                  Node.js backend.</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
+            </div>
+          </div>
+    
+          <!-- Project 6 -->
+          <div class="col-md-4 mb-4">
+            <div class="card flip-card" data-content="angularapp">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <h3 class="card-title">TradeSmart Angular App</h3>
+                  <img src="images/Card-6-cardImg.png" alt="TradeSmart Angular App" class="card-img">
+                </div>
+                <div class="flip-card-back">
+                  <div class="card-body">
+                    <p class="card-text">A real-time trading simulator app designed using the Angular framework with a Node.js backend.</p>
+                    <button class="btn btn-primary click-here">Click Here To Know More</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -547,54 +608,58 @@
       </div>
 
       <!-- Row 3 -->
-      <div class="project-row-3">
-        <!-- Project 7 -->
-        <div class="project4 card" data-content="blockchainproject">
-          <h1><span style="white-space: nowrap;">Blockchain System</span><br><span style="white-space: nowrap;">& Network Protocols</span></h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img class="card-img" src="images/card-7-imgdsp.png" alt="Avatar" style="width:300px;height:300px;">
-              </div>
-              <div class="flip-card-back">
-                <p style="font-size:15px;">A Socket programming project demonstarting the use of communication protocols
-                  such as TCP (Transmission Control Protocol) and UDP (User Datagram Protocol).</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Project 8 -->
-        <div class="project2 card" data-content="androidapp">
-          <h1>Stock Market Adroid App</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img src="images/Card-4-carddisplayImage.png" alt="Avatar" style="width:300px;height:300px;">
-              </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">A foreground object detection project leveraging the concept of frame
-                  differencing.</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
+      <div class="container">
+        <div class="row">
+          <!-- Project 7 -->
+          <div class="col-md-4 mb-4">
+            <div class="card flip-card" data-content="blockchainproject">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <h3 class="card-title">Blockchain System & Network Protocols</span></h3>
+                  <img src="images/card-7-imgdsp.png" alt="Blockchain System" class="card-img">
+                </div>
+                <div class="flip-card-back">
+                  <div class="card-body">
+                    <p class="card-text" style="font-size: 15px;">A Socket programming project demonstrating the use of communication protocols such as TCP (Transmission Control Protocol) and UDP (User Datagram Protocol).</p>
+                    <button class="btn btn-primary click-here">Click Here To Know More</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Project 9 -->
-        <div class="project3 card" data-content="angularapp">
-          <h1 style="overflow: hidden; text-overflow: ellipsis;">Gene Expresson Analysis Shiny App</h1>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <img src="images/Card-6-cardImg.png" alt="Avatar" style="width:300px;height:300px;">
+    
+          <!-- Project 8 -->
+          <div class="col-md-4 mb-4">
+            <div class="card flip-card" data-content="androidapp">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <h3 class="card-title">Stock Market Android App</h3>
+                  <img src="images/card-8-dspimg.png" alt="Stock Market Android App" class="card-img">
+                </div>
+                <div class="flip-card-back">
+                  <div class="card-body">
+                    <p class="card-text" style="font-size: 20px;">Android app that uses Java to display real-time stock market data to users.</p>
+                    <button class="btn btn-primary click-here">Click Here To Know More</button>
+                  </div>
+                </div>
               </div>
-              <div class="flip-card-back">
-                <p style="font-size:20px;">A real-time trading simulator app designed using the Angular framework with a
-                  Node.js backend.</p>
-                <br>
-                <button class="click-here">Click Here To Know More</button>
+            </div>
+          </div>
+    
+          <!-- Project 9 -->
+          <div class="col-md-4 mb-4">
+            <div class="card flip-card" data-content="rshinyapp">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <h3 class="card-title">Gene Expression Analysis Shiny App</h3>
+                  <img src="images/Card-9-dspimg.png" alt="Gene Expression Analysis Shiny App" class="card-img">
+                </div>
+                <div class="flip-card-back">
+                  <div class="card-body">
+                    <p class="card-text" style="font-size: 20px;">A RShiny App to analyze TCGA RNASeq Data across multiple cancer cohorts.</p>
+                    <button class="btn btn-primary click-here">Click Here To Know More</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -605,21 +670,21 @@
 
   <div class="bgimg-3">
     <div class="caption">
-      <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span>
+      <!-- <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span> -->
     </div>
   </div>
 
-  <div style="position:relative;">
+  <!-- <div style="position:relative;">
     <div style="color:#ddd;background-color:#282E34;text-align:center;padding:50px 80px;text-align: justify;">
       <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
       <h2 style="text-align:center">My Resume</h2>
-      <div class="timeline"></div>
-    </div>
-  </div>
+      <div class="timeline"></div> -->
+    <!-- </div>
+  </div> --> 
 
   <div class="bgimg-1">
     <div class="caption">
-      <span class="border">COOL!</span>
+      <!-- <span class="border">COOL!</span> -->
     </div>
   </div>
 
@@ -688,12 +753,15 @@
         </a>
         </br>
         </br>
+        <center>
         <a href="https://github.com/blm3886/Minesweeper" target="_blank" rel="noopener noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
           viewBox="0 0 16 16">
           <path
             d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
-        </svg><p class="text-colour-brown" >Github</p>
+        </svg>
+        <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
+        </center>
         </a>
         `
         modalBody.innerHTML = content_string; // Update modal content
@@ -720,6 +788,13 @@
           </video>
           <br>
           <img src="./images/card-2-aux2.png" alt="Escape Room Game" style="width:300px;height:300px;">
+          <br>
+          <br>
+          <a href="https://benfica1718.itch.io/roaringbears" download>
+          <button style="padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007BFF; border: none; border-radius: 5px; cursor: pointer;">
+              Play Game
+          </button>
+      </a>
       </div>
 
       <h2 class="text-colour-brown">Project Description</h2>
@@ -741,20 +816,18 @@
       <p class="text-colour-brown">
           Ready to test your skills in the escape room? start playing!
       </p>
-      <a href="https://benfica1718.itch.io/roaringbears" download>
-          <button style="padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007BFF; border: none; border-radius: 5px; cursor: pointer;">
-              Play Game
-          </button>
-      </a>
       </br>
       </br>
-        <a href=https://github.com/blm3886/GameDev" target="_blank" rel="noopener noreferrer">
+      <center>
+        <a href=https://github.com/blm3886/GameDev target="_blank" rel="noopener noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
           viewBox="0 0 16 16">
           <path
             d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
-        </svg><p class="text-colour-brown" >Github</p>
+        </svg>
+        <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
         </a>
+      </center>
         `
         modalBody.innerHTML = content_string; // Update modal content
         modal.style.display = "block"; // Show the modal
@@ -825,14 +898,16 @@
       </ul>
       <br>
       <br>
+      <center>
       <a href="https://github.com/blm3886/Image-Processing" target="_blank" rel="noopener noreferrer">
             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
                 viewBox="0 0 16 16">
                 <path
                     d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
             </svg>
-            <p class="text-colour-brown">Github</p>
+            <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
       </a>
+      </center>
       <div>
         `
         modalBody.innerHTML = content_string; // Update modal content
@@ -891,14 +966,16 @@
       <li><strong>Foreground Extraction:</strong> To ensure the foreground has smooth edges with minimal green pixels from the background, I used the concept of alpha mask creation. I created an alpha mask where each pixel's alpha value is set based on the background subtraction result. Pixels identified as part of the background are given a lower alpha value (e.g., 0), while foreground pixels are given a higher alpha value (e.g., 255). Using the refined alpha mask, I extracted the foreground object from each frame. The foreground pixels are retained with their original RGB values, and the background pixels are set to transparent (alpha = 0).</li>
       </ul>
       <br>
+      <center>
       <a href="https://github.com/blm3886/Image-Processing" target="_blank" rel="noopener noreferrer">
             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
                 viewBox="0 0 16 16">
                 <path
                     d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
             </svg>
-            <p class="text-colour-brown">Github</p>
+            <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
       </a>
+      </center>
       <div>
         `
         modalBody.innerHTML = content_string; // Update modal content
@@ -954,14 +1031,16 @@
       <li><strong>Background Overlay:</strong> After detecting the foreground in each frame using frame differencing, I replaced the background pixels with a flag value. I then used a static background file to overlay the flagged background pixels and create a composite video.</li>
       </ul>
       <br>
+      <center>
       <a href="https://github.com/blm3886/Motion-Detection-FrameDifferencing" target="_blank" rel="noopener noreferrer">
             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
                 viewBox="0 0 16 16">
                 <path
                     d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
             </svg>
-            <p class="text-colour-brown">Github</p>
+            <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
       </a>
+      </center>
       <div>
         `
         modalBody.innerHTML = content_string; // Update modal content
@@ -1016,6 +1095,186 @@
         modalBody.innerHTML = content_string; // Update modal content
         modal.style.display = "block"; // Show the modal
       }
+      else if (content === "androidapp") {
+        var content_string = `
+      <div class="text-colour-brown">
+      <h1 class="heading-pop-up">Stock Market Trading App</h1>
+        <hr style="border: 1px solid #ddd; margin: 20px 0;">
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+            <li><strong>Technology Stack:</strong></li>
+            <li><strong>Frontend:</strong><ul><li>Android SDK</li><li>JAVA</li><li>JavaScript (for plotting interactive charts)</li></ul></li>
+            <li><strong>Backend:</strong><ul><li>Node.js</li><li>RESTfulAPI</li><li>Finhub API</li></ul></li>
+        </ul>
+        <h2 class="text-colour-brown">Project Overview :</h2>
+        <p>This app allows users to simulate real-time stock market trading, providing a comprehensive platform to visualize stock data, track market trends, and make informed trading decisions. The app is developed using Java for the Android platform and integrates with the Finhub API to fetch real-time stock data.</p>        
+        <center>
+        <div class="video-container" style="text-align: center; margin: 20px 0;">
+        <img src="images/card-8-1.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        <p>The app allows users to search for a stock ticker of their choice. The request triggers the backend Node.js endpoint to retrieve the latest data regarding the stock using the free Finhub API and renders it to the user.</p>
+        <img src="images/card-8-2.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        <p>I have used the JavaScript Highcharts library to create the interactive recommendation plot as a separate web page, which is displayed within the app using the WebView class. This allows you to display web pages as part of your activity layout.</p>
+        </div>
+        </center>
+        <p><strong>Project Details</strong></p>
+        <ul>
+        <li><strong>Real-Time Stock Data:</strong>
+          <ul>
+            <li>Displays current stock prices and market data.</li>
+            <li>Provides interactive charts for visualizing stock price changes over various time periods.</li>
+          </ul>
+        </li>
+        <li><strong>Search Functionality:</strong>
+          <ul>
+            <li>Users can search for any stock ticker using a convenient search bar.</li>
+            <li>Fetches and displays detailed stock statistics and information.</li>
+          </ul>
+        </li>
+        <li><strong>User Portfolio Management:</strong>
+          <ul>
+            <li>Allows users to simulate buying and selling stocks.</li>
+          </ul>
+        </li>
+        <li><strong>Market Trends and News:</strong>
+          <ul>
+            <li>Shows buying and selling recommendation trends.</li>
+            <li>Displays the latest news related to the selected stock.</li>
+          </ul>
+        </li>
+        </ul> 
+      <br>
+      <center>
+      <a href="https://github.com/blm3886/Android-Project" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+            </svg>
+            <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
+      </a>
+      <div>
+      <center>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+      else if (content === "rshinyapp") {
+        var content_string = `
+      <div class="text-colour-brown">
+      <h1 class="heading-pop-up">RNASeq Data Analysis App</h1>
+        <hr style="border: 1px solid #ddd; margin: 20px 0;">
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+        <li><strong>R:</strong> Used for data manipulation and analysis.</li>
+        <li><strong>Shiny:</strong> A web application framework for R to build interactive web apps.</li>
+        <li><strong>Shinythemes:</strong> A web application framework for R to build interactive web apps, For applying themes to the Shiny app</li>
+        <li><strong>Data Libraries:</strong> For loading and handling genomic data and performing statistical analysis</li>
+        </ul>
+        <h2 class="text-colour-brown">Project Overview :</h2>
+        <p>The RNASeq Data Analysis App is a Shiny web application designed to facilitate the analysis of RNA sequencing data. The app allows users to select and analyze cancer study data from The Cancer Genome Atlas (TCGA) across different tissue types (Ectoderm, Mesoderm, and Endoderm) and provides various analysis options such as heatmaps, boxplots, and survival plots.</p>
+        <center>
+        <img src="images/card-9-img3.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        </center>
+        <p><strong>The Box Pot Feature</strong></p>
+        <p><strong>User Selection:</strong>Users can select a specific tissue cohort and a gene of interest from dropdown menus or input fields.</p>
+        <p>Box Plot Visualization:</strong>The app generates box plots to visualize the expression levels of the selected gene across different tissue types, comparing normal versus tumor conditions.</p>
+        <p><strong>Analysis Insights:</strong></p>
+        <ul>
+          <li><strong>Gene Expression Comparison:</strong> Users can examine how the expression of a single gene varies between normal and tumor samples.</li>
+          <li><strong>Tissue-Specific Insights:</strong> The analysis helps users understand the gene's expression levels across various tissue types, potentially revealing tissue-specific patterns or anomalies.</li>
+        </ul>
+        <p><strong>Uses:</strong></p>
+          <ul>
+          <li><strong>Tumor Analysis:</strong> This feature allows users to explore the impact of a specific gene on tumor samples, which is crucial for understanding its role in cancer.</li>
+          <li><strong>Cross-Tissue Visualization:</strong> Users can visualize gene expression data across different tissue types, aiding in the assessment of gene behavior in various biological contexts.</li>
+          </ul>
+        <center>
+        <img src="images/card-9-img5.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        </center>
+        <p><strong>Volcano Plots:</strong></p>
+        <p><strong>User Selection:</strong> Users can select a specific tissue cohort and the DESeq2 pipeline to compare the expression levels of genes across normal vs. tumor samples based on the LogFC (Log Fold Change) values.</p>
+        <p><strong>Volcano Plot Visualization:</strong> The app generates volcano plots to visualize differential expression analysis results. Users can explore the significance (p-value) and magnitude (Log Fold Change) of gene expression differences between normal and tumor conditions. Additionally, users can download the list of significantly upregulated genes and subject them to further downstream analysis.</p>
+        <center>
+        <img src="images/card-9-img4.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        </center>
+        <p><strong>Pathway Analysis:</strong></p>
+        <p><strong>Upregulated Gene Selection:</strong> Users can select significantly upregulated genes from differential expression results to identify biological pathways and processes that are potentially affected in tumor samples.</p>
+        <p><strong>Pathway Visualization:</strong> The app performs pathway enrichment analysis using the selected upregulated genes. It visualizes the involvement of these genes in various biological pathways, helping users to understand the broader biological implications of the gene expression changes observed in tumor conditions.</p>
+        <p><strong>Insights:</strong> By analyzing the pathways, users can gain insights into the molecular mechanisms underlying tumor development and progression. This analysis can highlight key pathways that are significantly impacted, providing valuable information for further research or therapeutic targeting.</p>
+        <center>
+        <p><strong>Project Status:</strong></p>
+        <p>This project is an initial prototype developed during my internship. It showcases the core functionalities and provides a foundation for further development and enhancement.</p>
+        <center>
+        <img src="images/card-9-endpic2.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        </center>
+        <a href="https://github.com/blm3886/R-shiny-Project" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+            </svg>
+            <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
+      </a>
+      <div>
+      </center>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
+      else if (content === "angularapp") {
+        var content_string = `
+      <div class="text-colour-brown">
+      <h1 class="heading-pop-up">TradeSmart: Real-Time Stock Market Trading App</h1>
+        <hr style="border: 1px solid #ddd; margin: 20px 0;">
+        <h2 class="text-colour-brown">Tech Stack</h2>
+        <ul class="text-colour-brown">
+        <li><strong>Frontend:</strong> Angular 8, HTML5, Bootstrap</li>
+        <li><strong>Backend:</strong> Node.js RESTful API.</li>
+        <li><strong>API:</strong> Finhub API</li>
+        </ul>
+        <h2 class="text-colour-brown">Project Overview :</h2>
+        <p>Developed an Interactive Trading Simulator using Angular for the frontend and Node.js for the backend. This application integrates with the Finhub Free API to provide real-time stock data visualization. The Finhub API provides free access to stock-related data, ensuring the app delivers up-to-date and accurate information</p>
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Search for any stock ticker of your choice using a search bar.</li>
+            <li>Latest news related to the current stock for informed decision-making.</li>
+            <li>Reactive design using Bootstrap to adjust to varying screen sizes, making it compatible with phone screens.</li>
+            <li>Visualize stock prices over the last 5 hours in a graphical format.</li>
+            <li>Display recommendation trends for buying and selling stocks.</li>
+            <li>Current stock statistics and live interactive charts for viewing daily stock price variations.</li>
+            <li>Browser caching to store stocks bought by a user, retaining the initial price and time for future reference and trading.</li>
+        </ul>
+        <center>
+        <img src="images/card-6-dspimg.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        <p>The app enables users to search for any stock ticker through an auto-suggest feature integrated with the search bar. The Node.js backend provides a RESTful API endpoint that acts as a proxy, fetching real-time stock data from the Finhub Free API.
+        </center>
+        <center>
+        <img src="images/Card-6-2.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        <p>In response to a search, the app displays various details including current stock prices. It features an interactive chart, plotted with JavaScript, that updates every 10 seconds to visualize stock price changes over the last 5 hours.</p>
+        </center>
+        <center>
+        <img src="images/Card-6-1.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        <p>The app simulates real-time stock buying and selling using browser cache. Purchased stocks are stored in the cache at the current market price, allowing users to return later and sell them, effectively simulating a real-time stock market paper trading experience.</p>
+        </center>
+        <center>
+        <img src="images/Card-6-3.png" alt="Image Processing Project" style="width:700px;height:600px;">
+        <p>I have also included various JavaScript-built plots that display stock-related statistics, such as recommendation trends and historical EPS surprises.</p>
+        </center>
+      <center>
+        <a href="https://github.com/blm3886/Angular-Web-App" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-github"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+            </svg>
+        <p class="text-colour-brown">Click here to visit Github Repo For More Implementation Details</p>
+      </a>
+      <div>
+      </center>
+        `
+        modalBody.innerHTML = content_string; // Update modal content
+        modal.style.display = "block"; // Show the modal
+      }
     }
   });
 
@@ -1031,5 +1290,4 @@
     }
   }
 </script>
-
 </html>
